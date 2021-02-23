@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.profileImage {
+  height: 5.5rem;
+  width: 5.5rem;
+  border-radius: 50%;
+}
+
+.info {
+  margin-left: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $title;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin-top: .5rem;
+  }
+  img {
+    
+    margin-right: .5rem;
+  }
+}

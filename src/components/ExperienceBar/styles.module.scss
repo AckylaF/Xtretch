@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+@mixin progress-appearence($color) {
+  background-color: $color;
+  border-radius: 4px;
+}
+
+@mixin progressBar {
+  progress::-webkit-progress-bar {
+    @include progress-appearence($gray-line);
+  }
+  progress::-webkit-progress-value {
+    @include progress-appearence($green);
+  }
+  progress::-moz-progress-bar {
+    @include progress-appearence($green);
+  }
+}
+
+.root {
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: 1rem;
+  }
+
+  progress {
+    flex: 1;
+    height: 4px;
+    margin: 0 1.5rem;
+    position: relative;
+    text-align: center;
+  }
+
+  @include progressBar;
+
+  progress:after {
+    content: attr(value)'%';
+    position: absolute;
+    transform: translateX(-50%);
+    margin-top: .2rem;
+  }
+}
