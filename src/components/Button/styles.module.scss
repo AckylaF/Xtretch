@@ -1,0 +1,61 @@
+@import '../../styles/variables';
+
+.root {
+  width: 100%;
+  height: 4.5rem;
+
+  margin-top: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+  border-bottom: 5px solid transparent;
+
+  background-color: $blue;
+  color: $white;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  transition: .25s;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-left: 1rem;
+      transform: translateY(5%);  
+    }
+  }
+}
+
+.root:not(:disabled):hover {
+  background-color: $blue-dark;
+}
+
+.activeButton {
+  background-color: $white;
+  color: $text;
+}
+
+.activeButton:not(:disabled):hover {
+  background-color: $red;
+  color: $white;
+}
+
+.root:disabled {
+  cursor: not-allowed;
+  background-color: $white;
+  color: $text;
+  border-bottom: 5px solid $green;
+}
+
+.check {
+  background-color: $green;
+  color: $white;
+  border-radius: 50%;
+}

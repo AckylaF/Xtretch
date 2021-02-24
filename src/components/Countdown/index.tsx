@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import classes from './styles.module.scss'
 
-const Countdown: React.FunctionComponent = () => {
-  const [time, setTime] = useState(25 * 60)
-  const [active, setActive] = useState(false)
+import Button from '../Button'
 
-  const startCountdown = () => setActive(!active)
+let countdownTimeout: NodeJS.Timeout
+
+const Countdown: React.FunctionComponent = () => {
+  const [time, setTime] = useState(0.05 * 60)
+  const [isActive, setIsActive] = useState(false)
+  const [hasFinished, setHasFinished] = useState(false)
+
+  const startCountdown = () => setIsActive(true)
+  const resetCountdown = () => {
+    clearTimeout(countdownTimeout)
+    setIsActive(false)
+    setTime(25 * 60)
+  }
 
   const minutes = Math.floor(time / 60)
   const seconds = time % 60
@@ -14,12 +24,15 @@ const Countdown: React.FunctionComponent = () => {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('')
 
   useEffect(() => {
-    if (active && time > 0) {
-      setTimeout(() => {
+    if (isActive && time > 0) {
+      countdownTimeout = setTimeout(() => {
         setTime(time - 1)
       }, 1000)
+    } else if (time === 0) {
+      setIsActive(false)
+      setHasFinished(true)
     }
-  }, [active, time])
+  }, [isActive, time])
 
   return (
     <>
@@ -34,9 +47,12 @@ const Countdown: React.FunctionComponent = () => {
           <span>{secondRight}</span>
         </div>
       </div>
-      <button className={classes.button} onClick={startCountdown}>
-        {!active ? 'Iniciar um ciclo' : 'Encerrar ciclo'}
-      </button>
+      <Button
+        isActive={isActive}
+        hasFinished={hasFinished}
+        startCountdown={startCountdown}
+        resetCountdown={resetCountdown}
+      ></Button>
     </>
   )
 }
