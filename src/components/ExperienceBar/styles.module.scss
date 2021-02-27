@@ -36,7 +36,7 @@
   @include progressBar;
 
   progress:after {
-    content: attr(value)'%';
+    content: attr(value)' xp';
     position: absolute;
     transform: translateX(-50%);
     margin-top: .2rem;

@@ -1,50 +1,24 @@
-/* eslint-disable multiline-ternary */
 import React from 'react'
-import {
-  IoCloseOutline,
-  IoCheckmarkSharp,
-  IoCaretForward
-} from 'react-icons/io5'
 import classes from './styles.module.scss'
 
-interface Props {
-  isActive: boolean
-  hasFinished: boolean
-  startCountdown: any
-  resetCountdown: any
+interface buttonProps {
+  color: string
+  fn?: () => void
 }
 
-const Button: React.FunctionComponent<Props> = ({
-  isActive,
-  hasFinished,
-  startCountdown,
-  resetCountdown
+const Button: React.FunctionComponent<buttonProps> = ({
+  children,
+  color,
+  fn
 }) => {
   return (
     <button
-      type="button"
-      disabled={hasFinished}
-      className={
-        isActive ? `${classes.root} ${classes.activeButton}` : classes.root
-      }
-      onClick={isActive ? resetCountdown : startCountdown}
+      className={`${classes.root} ${
+        color === 'red' ? classes.denialButton : classes.confirmationButton
+      }`}
+      onClick={fn}
     >
-      {isActive ? (
-        <div>
-          Abandonar ciclo
-          <IoCloseOutline />
-        </div>
-      ) : hasFinished ? (
-        <div>
-          Ciclo encerrado
-          <IoCheckmarkSharp className={classes.check} />
-        </div>
-      ) : (
-        <div>
-          Iniciar um ciclo
-          <IoCaretForward />
-        </div>
-      )}
+      {children}
     </button>
   )
 }

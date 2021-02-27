@@ -1,7 +1,10 @@
+import React, { useContext } from 'react'
 import classes from './styles.module.scss'
-import React from 'react'
+import ChallengesContext from '../../contexts/ChallengesContext'
 
 const Profile: React.FunctionComponent = () => {
+  const { level } = useContext(ChallengesContext)
+
   return (
     <div className={classes.root}>
       <img
@@ -13,7 +16,7 @@ const Profile: React.FunctionComponent = () => {
         <h1>Ackyla Ferreira</h1>
         <span>
           <img src="/icons/level.svg" alt="level up" />
-          <p>Level 1</p>
+          <p>Level {level}</p>
         </span>
       </div>
     </div>

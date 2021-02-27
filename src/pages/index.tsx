@@ -7,6 +7,7 @@ import ExperienceBar from '../components/ExperienceBar'
 import Profile from '../components/Profile'
 import CompletedChallenges from '../components/CompletedChallenges'
 import Countdown from '../components/Countdown'
+import ChallengeBox from '../components/ChallengeBox'
 
 const Home: NextPage = () => {
   return (
@@ -23,7 +24,8 @@ const Home: NextPage = () => {
             <CompletedChallenges />
             <Countdown />
           </div>
-          <div></div>
+
+          <ChallengeBox />
         </section>
       </div>
     </>
