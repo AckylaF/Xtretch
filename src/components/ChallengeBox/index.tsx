@@ -1,12 +1,27 @@
 /* eslint-disable multiline-ternary */
 import React, { useContext } from 'react'
 import classes from './styles.module.scss'
+
 import ChallengesContext from '../../contexts/ChallengesContext'
+import CountdownContext from '../../contexts/CountdownContext'
 
 import Button from '../Button'
 
 const ChallengeBox: React.FunctionComponent = () => {
-  const { activeChallenge, resetChallenge } = useContext(ChallengesContext)
+  const { activeChallenge, resetChallenge, completeChallenge } = useContext(
+    ChallengesContext
+  )
+  const { resetCountdown } = useContext(CountdownContext)
+
+  const handleSucceededChallenge = () => {
+    completeChallenge()
+    resetCountdown()
+  }
+
+  const handleFailedChallenge = () => {
+    resetChallenge()
+    resetCountdown()
+  }
 
   return (
     <div className={classes.root}>
@@ -19,11 +34,12 @@ const ChallengeBox: React.FunctionComponent = () => {
             <p>{activeChallenge.description}</p>
           </main>
           <footer>
-            {/* THIS IS NOT RIGHT */}
-            <Button color="red" fn={resetChallenge}>
+            <Button color="red" fn={handleFailedChallenge}>
               Falhei
             </Button>
-            <Button color="green">Completei</Button>
+            <Button color="green" fn={handleSucceededChallenge}>
+              Completei
+            </Button>
           </footer>
         </div>
       ) : (

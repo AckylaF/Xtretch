@@ -14,7 +14,7 @@ const Button: React.FunctionComponent<buttonProps> = ({
   return (
     <button
       className={`${classes.root} ${
-        color === 'red' ? classes.denialButton : classes.confirmationButton
+        color === 'red' ? classes.failureButton : classes.successButton
       }`}
       onClick={fn}
     >
