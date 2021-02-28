@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 import challenges from '../../challenges.json'
 
 interface Challenge {
@@ -13,7 +14,9 @@ interface ChallengesContextData {
   experienceToNextLevel: number
   completedChallenges: number
   activeChallenge: Challenge
+  isModalActive: boolean
   levelUp: () => void
+  toggleLevelUpModal: () => void
   startNewChallenge: () => void
   resetChallenge: () => void
   completeChallenge: () => void
@@ -37,10 +40,16 @@ export const ChallengesProvider: React.FunctionComponent<ChallengesContextProps>
   const [currentExperience, setCurrentExperience] = useState(0)
   const [completedChallenges, setCompletedChallenges] = useState(0)
   const [activeChallenge, setActiveChallenge] = useState(initialChallengeState)
+  const [isModalActive, setIsModalActive] = useState(false)
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
-  const levelUp = () => setLevel(prevState => prevState + 1)
+  const toggleLevelUpModal = () => setIsModalActive(prevState => !prevState)
+
+  const levelUp = () => {
+    setLevel(prevState => prevState + 1)
+    toggleLevelUpModal()
+  }
 
   const startNewChallenge = () => {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length)
@@ -77,7 +86,17 @@ export const ChallengesProvider: React.FunctionComponent<ChallengesContextProps>
 
   useEffect(() => {
     Notification.requestPermission()
+
+    setLevel(Number(Cookies.get('level')))
+    setCurrentExperience(Number(Cookies.get('currentExperience')))
+    setCompletedChallenges(Number(Cookies.get('completedChallenges')))
   }, [])
+
+  useEffect(() => {
+    Cookies.set('level', String(level))
+    Cookies.set('currentExperience', String(currentExperience))
+    Cookies.set('completedChallenges', String(completedChallenges))
+  }, [level, currentExperience, completedChallenges])
 
   return (
     <ChallengesContext.Provider
@@ -87,7 +106,9 @@ export const ChallengesProvider: React.FunctionComponent<ChallengesContextProps>
         experienceToNextLevel,
         completedChallenges,
         activeChallenge,
+        isModalActive,
         levelUp,
+        toggleLevelUpModal,
         startNewChallenge,
         resetChallenge,
         completeChallenge
